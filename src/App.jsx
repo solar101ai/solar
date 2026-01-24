@@ -8,7 +8,7 @@ const SETTINGS = {
   brandName: "Solar101 AI",
   market: "加利福尼亚",
   wechatId: "Uscleanenergy123",
-  smsNumber: "2134589525",
+  smsNumber: "+12134589525",
 };
 
 /* ===========
@@ -50,6 +50,21 @@ const APPROVED_QA = [
 /* ===========
    工具
 =========== */
+function toE164US(phone) {
+  const digits = String(phone || "").replace(/\D/g, "");
+  if (!digits) return "";
+  if (digits.length === 11 && digits.startsWith("1")) return `+${digits}`;
+  if (digits.length === 10) return `+1${digits}`;
+  return digits.startsWith("+") ? digits : `+${digits}`;
+}
+
+function smsHref(phone, body) {
+  const e164 = toE164US(phone);
+  if (!e164) return "sms:";
+  const b = body ? `?&body=${encodeURIComponent(body)}` : "";
+  return `sms:${e164}${b}`;
+}
+
 function normalize(text) {
   return (text || "")
     .toLowerCase()
@@ -182,7 +197,7 @@ function FloatingConnect() {
       >
         <div style={{ fontWeight: 900, marginBottom: 6 }}>联系真人</div>
         <a
-          href={`sms:${SETTINGS.smsNumber}`}
+          href={smsHref(SETTINGS.smsNumber)}
           style={{
             display: "block",
             textAlign: "center",
