@@ -392,6 +392,7 @@ function Home() {
 
   // 每次打开一个问题，runId 都会变化，用来强制 Typewriter 重新开始
   const [runId, setRunId] = useState(0);
+  const [typedDoneMap, setTypedDoneMap] = useState({});
 
   // 用于展开动画的 ref
   const refs = useRef({});
@@ -399,10 +400,18 @@ function Home() {
   function toggle(id) {
     setOpenId((cur) => {
       const next = cur === id ? null : id;
-      if (next) setRunId((v) => v + 1);
+  
+      if (next) {
+        setRunId((v) => v + 1);
+  
+        // ✅ 每次打开一个问题，都先把「打完字」状态清掉
+        setTypedDoneMap((m) => ({ ...(m || {}), [next]: false }));
+      }
+  
       return next;
     });
   }
+  
 
   function goAskFromInput() {
     const text = input.trim();
@@ -565,9 +574,42 @@ function Home() {
         wordBreak: "break-word",
       }}
     >
-      {isOpen && (
-        <Typewriter key={`${item.id}-${runId}`} text={item.answer} speed={22} />
-      )}
+{isOpen && (
+  <>
+    <Typewriter
+      key={`${item.id}-${runId}`}
+      text={item.answer}
+      speed={22}
+      onDone={() => {
+        setTypedDoneMap((m) => ({ ...(m || {}), [item.id]: true }));
+      }}
+    />
+
+    {typedDoneMap?.[item.id] && (
+      <div style={{ marginTop: 14 }}>
+        <button
+          onClick={() => nav("/estimate")}
+          style={{
+            width: "100%",
+            padding: "12px 14px",
+            borderRadius: 14,
+            border: "1px solid #e5e7eb",
+            background: "#111827",
+            color: "white",
+            fontWeight: 900,
+            cursor: "pointer",
+          }}
+        >
+          让我用 AI 判断我能不能省钱
+        </button>
+
+        <div style={{ fontSize: 12, color: "#6b7280", marginTop: 8 }}>
+          只要 1 分钟，不会触发销售联系。
+        </div>
+      </div>
+    )}
+  </>
+)}
     </div>
   </div>
 </div>
