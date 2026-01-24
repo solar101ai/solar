@@ -13,6 +13,16 @@ const SETTINGS = {
 };
 
 /* ===========
+   集成配置
+   只改这里就行
+=========== */
+const INTEGRATIONS = {
+  zapierHookUrl: "https://hooks.zapier.com/hooks/catch/11896107/uqat845/",
+  uploadcarePublicKey: "a78e71a92a6aea20714f",
+  source: "solar101_webapp",
+};
+
+/* ===========
    已审批问答
 =========== */
 const APPROVED_QA = [
@@ -266,6 +276,61 @@ function zipRand(zip, min, max) {
 }
 
 /* ===========
+   新增: 时间, Uploadcare, Zapier
+=========== */
+function nowISO() {
+  return new Date().toISOString();
+}
+
+async function uploadToUploadcare(file, publicKey) {
+  if (!file) return { fileUrl: "", uuid: "" };
+
+  const form = new FormData();
+  form.append("UPLOADCARE_PUB_KEY", publicKey);
+  form.append("UPLOADCARE_STORE", "auto");
+  form.append("file", file);
+
+  const resp = await fetch("https://upload.uploadcare.com/base/", {
+    method: "POST",
+    body: form,
+  });
+
+  if (!resp.ok) {
+    const txt = await resp.text().catch(() => "");
+    throw new Error(`Uploadcare 上传失败: ${resp.status} ${txt}`);
+  }
+
+  const data = await resp.json();
+  const uuid = data?.file;
+  if (!uuid) throw new Error("Uploadcare 返回缺少 file uuid");
+
+  return {
+    uuid,
+    fileUrl: `https://ucarecdn.com/${uuid}/`,
+  };
+}
+
+/* ===========
+   Zapier 提交（浏览器 no-cors 版本）
+   注意：no-cors 拿不到状态码，所以只要不 throw 就当成功
+=========== */
+async function sendToZapier(payload) {
+  const url = INTEGRATIONS.zapierHookUrl;
+  if (!url) throw new Error("缺少 Zapier Hook URL");
+
+  // 用 text/plain 避免触发预检请求（OPTIONS）
+  // 用 no-cors 避免被 CORS 拦截
+  await fetch(url, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "text/plain;charset=UTF-8" },
+    body: JSON.stringify(payload),
+  });
+
+  return true;
+}
+
+/* ===========
    UI 基础
 =========== */
 function TopNav() {
@@ -390,28 +455,23 @@ function Home() {
   const [input, setInput] = useState("");
   const [openId, setOpenId] = useState(null);
 
-  // 每次打开一个问题，runId 都会变化，用来强制 Typewriter 重新开始
   const [runId, setRunId] = useState(0);
   const [typedDoneMap, setTypedDoneMap] = useState({});
 
-  // 用于展开动画的 ref
   const refs = useRef({});
 
   function toggle(id) {
     setOpenId((cur) => {
       const next = cur === id ? null : id;
-  
+
       if (next) {
         setRunId((v) => v + 1);
-  
-        // ✅ 每次打开一个问题，都先把「打完字」状态清掉
         setTypedDoneMap((m) => ({ ...(m || {}), [next]: false }));
       }
-  
+
       return next;
     });
   }
-  
 
   function goAskFromInput() {
     const text = input.trim();
@@ -546,73 +606,72 @@ function Home() {
                 </button>
 
                 <div
-  style={{
-    maxHeight: isOpen ? MAX_OPEN_HEIGHT : 0,
-    opacity: isOpen ? 1 : 0,
-    transition: "max-height 150ms ease, opacity 150ms ease",
-    overflow: "hidden",
-    background: "#f9fafb",
-  }}
->
-  {/* 固定宽度壳（关键） */}
-  <div
-    style={{
-      width: 620,
-      maxWidth: "100%",
-      margin: "0 auto",
-      boxSizing: "border-box",
-      flexShrink: 0,
-    }}
-  >
-    <div
-      style={{
-        padding: "0 12px 12px",
-        color: "#374151",
-        lineHeight: 1.7,
-        fontSize: 14,
-        overflowWrap: "anywhere",
-        wordBreak: "break-word",
-      }}
-    >
-{isOpen && (
-  <>
-    <Typewriter
-      key={`${item.id}-${runId}`}
-      text={item.answer}
-      speed={22}
-      onDone={() => {
-        setTypedDoneMap((m) => ({ ...(m || {}), [item.id]: true }));
-      }}
-    />
+                  style={{
+                    maxHeight: isOpen ? MAX_OPEN_HEIGHT : 0,
+                    opacity: isOpen ? 1 : 0,
+                    transition: "max-height 150ms ease, opacity 150ms ease",
+                    overflow: "hidden",
+                    background: "#f9fafb",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: 620,
+                      maxWidth: "100%",
+                      margin: "0 auto",
+                      boxSizing: "border-box",
+                      flexShrink: 0,
+                    }}
+                  >
+                    <div
+                      style={{
+                        padding: "0 12px 12px",
+                        color: "#374151",
+                        lineHeight: 1.7,
+                        fontSize: 14,
+                        overflowWrap: "anywhere",
+                        wordBreak: "break-word",
+                      }}
+                    >
+                      {isOpen && (
+                        <>
+                          <Typewriter
+                            key={`${item.id}-${runId}`}
+                            text={item.answer}
+                            speed={22}
+                            onDone={() => {
+                              setTypedDoneMap((m) => ({ ...(m || {}), [item.id]: true }));
+                            }}
+                          />
 
-    {typedDoneMap?.[item.id] && (
-      <div style={{ marginTop: 14 }}>
-        <button
-          onClick={() => nav("/estimate")}
-          style={{
-            width: "100%",
-            padding: "12px 14px",
-            borderRadius: 14,
-            border: "1px solid #e5e7eb",
-            background: "#111827",
-            color: "white",
-            fontWeight: 900,
-            cursor: "pointer",
-          }}
-        >
-          让我用 AI 判断我能不能省钱
-        </button>
+                          {typedDoneMap?.[item.id] && (
+                            <div style={{ marginTop: 14 }}>
+                              <button
+                                onClick={() => nav("/estimate")}
+                                style={{
+                                  width: "100%",
+                                  padding: "12px 14px",
+                                  borderRadius: 14,
+                                  border: "1px solid #e5e7eb",
+                                  background: "#111827",
+                                  color: "white",
+                                  fontWeight: 900,
+                                  cursor: "pointer",
+                                }}
+                              >
+                                让我用 AI 判断我能不能省钱
+                              </button>
 
-        <div style={{ fontSize: 12, color: "#6b7280", marginTop: 8 }}>
-          只要 1 分钟，不会触发销售联系。
-        </div>
-      </div>
-    )}
-  </>
-)}
-    </div>
-  </div>
-</div>
+                              <div style={{ fontSize: 12, color: "#6b7280", marginTop: 8 }}>
+                                只要 1 分钟，不会触发销售联系。
+                              </div>
+                            </div>
+                          )}
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
               </div>
             );
           })}
@@ -735,33 +794,28 @@ function Estimate() {
           </div>
         )}
 
-<button
-  onClick={() => {
-    if (!hasBill) return;
-
-    localStorage.setItem(
-      "estimate_ctx",
-      JSON.stringify({ bill: Number(bill) || 0, zip })
-    );
-    nav("/deepdive");
-  }}
-  style={{
-    marginTop: 20,
-    width: "100%",
-    padding: "12px 14px",
-    borderRadius: 14,
-    border: "1px solid #e5e7eb",
-    background: "#111827",
-    color: "white",
-    fontWeight: 900,
-    cursor: hasBill ? "pointer" : "not-allowed",
-    opacity: hasBill ? 1 : 0.35,
-    pointerEvents: hasBill ? "auto" : "none",
-  }}
->
-  继续判断
-</button>
-
+        <button
+          onClick={() => {
+            if (!hasBill) return;
+            localStorage.setItem("estimate_ctx", JSON.stringify({ bill: Number(bill) || 0, zip }));
+            nav("/deepdive");
+          }}
+          style={{
+            marginTop: 20,
+            width: "100%",
+            padding: "12px 14px",
+            borderRadius: 14,
+            border: "1px solid #e5e7eb",
+            background: "#111827",
+            color: "white",
+            fontWeight: 900,
+            cursor: hasBill ? "pointer" : "not-allowed",
+            opacity: hasBill ? 1 : 0.35,
+            pointerEvents: hasBill ? "auto" : "none",
+          }}
+        >
+          继续判断
+        </button>
 
         {!hasBill && (
           <div style={{ fontSize: 12, color: "#9ca3af", marginTop: 8 }}>
@@ -785,6 +839,9 @@ function DeepDive() {
   const [usageTime, setUsageTime] = useState("");
 
   const [fileName, setFileName] = useState("");
+  const [fileUrl, setFileUrl] = useState("");
+  const [uploading, setUploading] = useState(false);
+  const [uploadErr, setUploadErr] = useState("");
 
   const [computing, setComputing] = useState(false);
   const [showResult, setShowResult] = useState(false);
@@ -1056,12 +1113,56 @@ function DeepDive() {
                 </div>
 
                 <div style={{ marginTop: 10 }}>
-                  <input type="file" onChange={(e) => setFileName(e.target.files?.[0]?.name || "")} />
+                  <input
+                    type="file"
+                    accept="image/*,application/pdf"
+                    onChange={async (e) => {
+                      const f = e.target.files?.[0];
+                      setUploadErr("");
+                      setFileUrl("");
+                      setFileName(f?.name || "");
+                      if (!f) return;
+
+                      try {
+                        setUploading(true);
+                        const out = await uploadToUploadcare(f, INTEGRATIONS.uploadcarePublicKey);
+                        setFileUrl(out.fileUrl || "");
+
+                        localStorage.setItem(
+                          "deepdive_upload",
+                          JSON.stringify({
+                            fileName: f.name,
+                            fileUrl: out.fileUrl || "",
+                            uploadedAt: nowISO(),
+                          })
+                        );
+                      } catch (err) {
+                        setUploadErr(err?.message || "上传失败");
+                      } finally {
+                        setUploading(false);
+                      }
+                    }}
+                  />
+
                   {fileName && <div style={{ fontSize: 12, marginTop: 6 }}>已选择：{fileName}</div>}
+
+                  {uploading && <div style={{ fontSize: 12, marginTop: 6 }}>正在上传中...</div>}
+
+                  {!!fileUrl && (
+                    <div style={{ fontSize: 12, marginTop: 6 }}>
+                      上传成功：已生成文件链接
+                    </div>
+                  )}
+
+                  {!!uploadErr && (
+                    <div style={{ fontSize: 12, marginTop: 6, color: "#b91c1c" }}>
+                      {uploadErr}
+                    </div>
+                  )}
                 </div>
 
                 <div style={{ fontSize: 12, color: "#9ca3af", marginTop: 10 }}>
-                  仅用于判断是否适合继续评估，不会自动触发销售联系。
+                  仅用于判断是否适合继续评估，不会自动触发销售联系。不上传也可以继续。
                 </div>
               </div>
             )}
@@ -1118,6 +1219,10 @@ function CollectStep() {
   const [phone, setPhone] = useState("");
   const [wechat, setWechat] = useState("");
 
+  const [submitting, setSubmitting] = useState(false);
+  const [submitErr, setSubmitErr] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
   useEffect(() => {
     const t = setTimeout(() => setPhase("ask_contact"), 700);
     return () => clearTimeout(t);
@@ -1141,6 +1246,61 @@ function CollectStep() {
     border: "1px solid #e5e7eb",
     marginTop: 10,
   };
+
+  async function handleSubmit() {
+    if (submitting) return;
+    setSubmitErr("");
+    setSubmitted(false);
+
+    const trimmedName = String(name || "").trim();
+    if (!trimmedName) {
+      setSubmitErr("请先填写姓名");
+      return;
+    }
+
+    if (contactMethod === "sms" && !String(phone).trim()) {
+      setSubmitErr("请选择短信时需要填写手机号");
+      return;
+    }
+
+    if (contactMethod === "wechat" && !String(wechat).trim()) {
+      setSubmitErr("请选择微信时需要填写微信号");
+      return;
+    }
+
+    let estimate = {};
+    try {
+      estimate = JSON.parse(localStorage.getItem("estimate_ctx") || "{}");
+    } catch {}
+
+    let upload = {};
+    try {
+      upload = JSON.parse(localStorage.getItem("deepdive_upload") || "{}");
+    } catch {}
+
+    const payload = {
+      time: nowISO(),
+      name: trimmedName,
+      contactMethod: contactMethod === "sms" ? "phone" : "wechat",
+      phone: contactMethod === "sms" ? String(phone).trim() : "",
+      wechat: contactMethod === "wechat" ? String(wechat).trim() : "",
+      bill: Number(estimate?.bill || 0) || 0,
+      zip: String(estimate?.zip || "").trim(),
+      fileUrl: String(upload?.fileUrl || "").trim(),
+      source: INTEGRATIONS.source,
+    };
+
+    try {
+      setSubmitting(true);
+      await postToZapier(INTEGRATIONS.zapierHookUrl, payload);
+      setSubmitted(true);
+      alert("已收到。\n判断正在进行中，\n结果将在 24 到 48 小时内生成并发送。");
+    } catch (err) {
+      setSubmitErr(err?.message || "提交失败");
+    } finally {
+      setSubmitting(false);
+    }
+  }
 
   return (
     <>
@@ -1213,17 +1373,49 @@ function CollectStep() {
 
           {contactMethod === "wechat" && (
             <>
-              <input value={wechat} onChange={(e) => setWechat(e.target.value)} placeholder="你的微信号" style={inputStyle} />
+              <input
+                value={wechat}
+                onChange={(e) => setWechat(e.target.value)}
+                placeholder="你的微信号"
+                style={inputStyle}
+              />
               <div style={{ fontSize: 12, color: "#9ca3af", marginTop: 6 }}>我会通过微信把你的分析结果发给你。</div>
             </>
           )}
 
           <button
-            style={{ marginTop: 14 }}
-            onClick={() => alert("已收到。\n判断正在进行中，\n结果将在 24 到 48 小时内生成并发送。")}
+            style={{
+              marginTop: 14,
+              padding: "10px 12px",
+              borderRadius: 12,
+              border: "1px solid #e5e7eb",
+              background: "#111827",
+              color: "white",
+              fontWeight: 900,
+              cursor: submitting ? "not-allowed" : "pointer",
+              opacity: submitting ? 0.6 : 1,
+            }}
+            disabled={submitting}
+            onClick={handleSubmit}
           >
-            发送给小满
+            {submitting ? "发送中..." : "发送给小满"}
           </button>
+
+          {!!submitErr && (
+            <div style={{ fontSize: 12, color: "#b91c1c", marginTop: 8 }}>
+              {submitErr}
+            </div>
+          )}
+
+          {submitted && (
+            <div style={{ fontSize: 12, color: "#6b7280", marginTop: 8 }}>
+              已提交成功，小满会通过你选择的方式联系你。
+            </div>
+          )}
+
+          <div style={{ fontSize: 12, color: "#9ca3af", marginTop: 10 }}>
+            点击后会自动写入 Google Sheet，不需要你再手动处理。
+          </div>
         </div>
       )}
     </>
