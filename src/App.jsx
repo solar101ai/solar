@@ -1,5 +1,6 @@
 import React, { useMemo, useState, useEffect, useRef } from "react";
 import { Routes, Route, Link, useLocation, useNavigate } from "react-router-dom";
+import Typewriter from "./Typewriter";
 
 /* ===========
    设置
@@ -18,32 +19,198 @@ const APPROVED_QA = [
   {
     id: "qa_1",
     question: "装太阳能到底能不能省钱？",
-    answer:
-      "是否省钱取决于你的电费水平、用电时间、屋顶条件以及是否合理设计系统。Solar101 的 AI 会先判断你是否具备省钱条件，而不是一上来就推销售。",
+    answer: `一、太阳能是怎么变成“省钱工具”的？
+最早的太阳能，是科研级和高成本技术，只有少数人用得起。
+但随着技术成熟和规模化生产，这十多年里，太阳能发电成本快速下降，
+已经从“昂贵替代能源”，变成了全球最便宜的发电方式之一。
+
+换句话说：
+👉 今天装太阳能，不再是“为了环保多花钱”
+👉 而是开始具备“经济合理性”的能源选择。
+
+二、当下电费的现实：为什么越来越多人开始考虑太阳能？
+与此同时，电价却在走相反的方向。
+在加州和全美大多数地区：
+
+电费在过去十多年里持续上涨
+峰谷电价差距拉大
+固定费用和结构性收费越来越复杂
+
+这意味着：
+👉 就算你用电量没变，你的账单也可能年年变高
+👉 用电成本的不可控性，正在成为很多家庭的压力来源
+
+太阳能的价值，正是在这种背景下被放大出来的：
+你不是在买一套设备，而是在锁定一部分未来用电成本。
+
+三、大多数装了太阳能的人，真的省了多少钱？
+现实中，装了太阳能的家庭，节省幅度差异非常大，但有几个可参考的范围：
+很多家庭的电费支出可以降低 30%–70%
+在用电量高、屋顶条件好、系统设计合理的情况下
+有些家庭可以接近“覆盖大部分用电”
+一些家庭通过电价套利和储能配合，在高电价时段显著减少电网用电
+
+但同样要说明：
+👉 不是每个人都能“接近零电费”
+👉 省多少，取决于用电结构、屋顶条件、电价体系、系统设计是否合理
+
+所以，“省钱”本身不是绝对的，
+而是一个高度取决于个人条件的结果。
+
+四、那到底值不值得装？
+真正的问题不是：
+❌ 太阳能能不能省钱
+而是：
+✅ 在你的具体条件下，太阳能值不值得装
+
+这也是 Solar101 AI 存在的意义：
+不是给你一个统一答案，
+而是判断你是否具备省钱的可能性、风险在哪里、是否值得继续算。`,
   },
   {
     id: "qa_2",
     question: "我家适不适合装太阳能？",
-    answer:
-      "是否适合主要看屋顶朝向、遮挡情况、电费金额和用电习惯。AI 会先筛掉明显不合适的情况，避免你被浪费时间。",
+    answer: `很多人问“适不适合”，其实是在问：
+👉 我的房子会不会是那种一开始就不该装的情况？
+
+一、为什么不是所有房子都适合？
+太阳能并不是一个“只要有屋顶就行”的东西。
+现实中，确实存在一些结构性限制：
+
+有的屋顶遮挡过多
+有的有效可用面积不足
+有的用电结构与发电曲线严重不匹配
+
+这些情况不是靠销售话术能解决的。
+
+二、真正影响“适不适合”的是什么？
+是否适合，核心不在于某一个条件，而在于组合结果，包括：
+屋顶可用性
+用电量是否达到有意义的区间
+用电时间是否集中在高价时段
+系统是否有合理设计空间
+
+只要其中几个关键条件不成立，
+即便勉强装上，效果也往往不理想。
+
+三、为什么要先筛掉“不适合”的？
+因为很多问题，一旦进入设计或签约阶段，就已经来不及回头。
+Solar101 AI 会在最前面就帮你判断：
+👉 有没有明显硬伤
+👉 是否值得继续深入评估
+👉 哪些情况反而应该直接停下
+
+适合不适合，应该先被判断清楚，而不是事后才发现。`,
   },
   {
     id: "qa_3",
     question: "AI 是怎么帮我算太阳能省钱的？",
-    answer:
-      "AI 会基于你的电费、加州电价、NEM 规则和常见系统成本做区间估算，并清楚告诉你用了哪些假设。",
+    answer: `很多人以为“算省钱”，就是给一个数字。
+但真实的判断过程远比一个数字复杂。
+
+一、从什么开始算？
+Solar101 AI 的起点不是“你能省多少”，
+而是先判断你的用电是否已经进入“有计算意义”的区间。
+
+如果连基础前提都不成立，
+后面的计算本身就没有参考价值。
+
+二、AI 实际在做什么判断？
+在估算过程中，AI 会综合考虑：
+你的电费区间
+当地电价结构和峰谷差
+NEM 规则下不同时段的用电价值
+常见系统成本和设计范围
+
+这些因素并不会给出一个绝对答案，
+而是形成一个合理的区间判断。
+
+三、为什么要明确假设？
+任何估算都建立在假设之上。
+Solar101 AI 会明确告诉你：
+哪些是假设
+哪些信息缺失可能会影响结果
+哪些情况会让结果变得不成立
+
+这样你看到的不是一个“看起来很美”的数字，
+而是一套可以被理解和质疑的判断过程。`,
   },
   {
     id: "qa_4",
     question: "AI 的估算和销售给我的有什么不同？",
-    answer:
-      "AI 不卖方案、不拿佣金，只做是否值得的判断；销售往往只展示对成交有利的部分。",
+    answer: `最大的不同在于：出发点不一样。
+
+一、销售在做什么？
+销售的目标通常是：
+展示最有利的情景
+强调最好看的结果
+尽快推进成交
+
+这并不一定是恶意，
+但很少有人会在一开始就把不利条件讲清楚。
+
+二、Solar101 AI 在做什么？
+AI 的第一步不是推荐方案，
+而是判断：
+👉 值不值得继续
+👉 风险在哪里
+👉 哪些假设过于乐观
+
+如果条件本身不成立，
+AI 会直接指出，而不是绕过去。
+
+三、为什么这一步很重要？
+因为一旦进入合同和施工阶段，
+很多问题就已经无法逆转。
+
+AI 的价值不在于让你“更想装”，
+而在于帮你避免走进一个一开始就不理性的路径。`,
   },
   {
     id: "qa_5",
     question: "现在还能不能拿到 ITC？为什么很多人拿不到？",
-    answer:
-      "ITC 仍然存在，但前提是系统结构、合同和申报方式合规。Solar101 会在估算阶段就检查是否满足 ITC 条件，避免事后踩坑。",
+    answer: `先说结论：
+对大多数普通家庭来说，现在直接拿到完整 30% 联邦 ITC 退税，
+已经不再是“默认存在”的事情了。
+
+一、政策为什么发生了变化？
+过去，《削减通胀法案（IRA）》确实为住宅太阳能提供了 30% 的联邦税收抵免，
+这一政策原本计划持续多年。
+但在后续相关法案调整中，
+住宅端的 30% ITC 实际上被提前终止或大幅收紧。
+
+这意味着：
+👉 “装太阳能就一定有 30% 退税”的时代已经结束
+👉 是否还能拿到 ITC，变成了一个需要具体判断的问题
+
+二、是不是完全没机会了？
+并不是。
+
+在特定区域、满足特定能源和用地结构要求的情况下，
+仍然存在通过 Energy Community 等政策资格路径，
+实现接近或等同于 30% 退税效果的可能性。
+
+需要说明的是：
+Energy Community 不是某一家公司，
+而是联邦政策中针对特定地区和能源结构设立的资格类别。
+
+三、为什么很多人现在“拿不到” ITC？
+真正的原因往往不是被拒，
+而是从一开始选择的项目路径，就不具备退税资格。
+
+很多项目：
+所在区域不符合政策定义
+用地或能源结构不符合要求
+项目设计时没有走可退税的合规路径
+
+在这种情况下，
+即便系统顺利装好，也根本不具备申请退税的基础条件。
+
+所以问题不是“政府不给退税”，
+而是：
+👉 很多项目，从一开始就不是能退税的那一类。
+
+而这，正是 Solar101 AI 要提前帮你判断清楚的部分。`,
   },
 ];
 
@@ -82,7 +249,6 @@ function overlapScore(a, b) {
   return hit / Math.max(sa.size, sb.size);
 }
 
-// ZIP 稳定随机
 function zipSeed(zip) {
   if (!zip) return null;
   let h = 0;
@@ -130,7 +296,6 @@ function TopNav() {
 
 function Layout({ children }) {
   useEffect(() => {
-    // 强制 light mode
     document.documentElement.style.colorScheme = "light";
     document.body.style.backgroundColor = "#ffffff";
   }, []);
@@ -146,7 +311,6 @@ function Layout({ children }) {
         minHeight: "100vh",
       }}
     >
-      {/* Top bar */}
       <div style={{ borderBottom: "1px solid #e5e7eb" }}>
         <div
           style={{
@@ -163,7 +327,6 @@ function Layout({ children }) {
         </div>
       </div>
 
-      {/* Page content */}
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div
           style={{
@@ -227,11 +390,18 @@ function Home() {
   const [input, setInput] = useState("");
   const [openId, setOpenId] = useState(null);
 
-  // 用于“轻动画”的高度控制
+  // 每次打开一个问题，runId 都会变化，用来强制 Typewriter 重新开始
+  const [runId, setRunId] = useState(0);
+
+  // 用于展开动画的 ref
   const refs = useRef({});
 
   function toggle(id) {
-    setOpenId((cur) => (cur === id ? null : id));
+    setOpenId((cur) => {
+      const next = cur === id ? null : id;
+      if (next) setRunId((v) => v + 1);
+      return next;
+    });
   }
 
   function goAskFromInput() {
@@ -241,14 +411,12 @@ function Home() {
     nav("/ask");
   }
 
-  // Hero 固定宽度（永远是“最宽版”）
   const heroWrap = {
     width: "100%",
     maxWidth: 960,
     margin: "0 auto",
   };
 
-  // 下面内容保持窄一点
   const contentWrap = {
     width: "100%",
     maxWidth: 640,
@@ -287,7 +455,6 @@ function Home() {
 
   return (
     <Layout>
-      {/* Hero: 永远固定成“最宽版” */}
       <div style={heroWrap}>
         <div style={hero}>
           <div style={{ fontWeight: 900, fontSize: 22, lineHeight: 1.2 }}>
@@ -336,7 +503,6 @@ function Home() {
         </div>
       </div>
 
-      {/* 下面内容：保持 640，不会影响上面的 Hero 宽度 */}
       <div style={contentWrap}>
         <div style={{ marginTop: 18, color: "#374151", lineHeight: 1.7, fontSize: 15 }}>
           你可以先做 1 分钟判断，
@@ -349,8 +515,10 @@ function Home() {
 
           {APPROVED_QA.map((item) => {
             const isOpen = openId === item.id;
-            const el = refs.current[item.id];
-            const measured = el ? el.scrollHeight : 0;
+
+            // 这里不再用 measured 做精确高度，因为 Typewriter 会让高度不断增长
+            // 用一个足够大的 maxHeight，配合 opacity 做超轻动画，不会截断内容
+            const MAX_OPEN_HEIGHT = 2400;
 
             return (
               <div key={item.id} style={qRow}>
@@ -369,10 +537,9 @@ function Home() {
                   {item.question}
                 </button>
 
-                {/* 150ms 超轻展开动画（高度 + 淡入） */}
                 <div
                   style={{
-                    maxHeight: isOpen ? measured : 0,
+                    maxHeight: isOpen ? MAX_OPEN_HEIGHT : 0,
                     opacity: isOpen ? 1 : 0,
                     transition: "max-height 150ms ease, opacity 150ms ease",
                     overflow: "hidden",
@@ -388,9 +555,25 @@ function Home() {
                       color: "#374151",
                       lineHeight: 1.7,
                       fontSize: 14,
+                    
+                      // ✅ 固定宽度，打字时不会越撑越宽
+                      width: "100%",
+                      maxWidth: 620,
+                      margin: "0 auto",
+                    
+                      // ✅ 防止长内容把布局撑爆
+                      boxSizing: "border-box",
+                      overflowWrap: "anywhere",
+                      wordBreak: "break-word",
                     }}
                   >
-                    {item.answer}
+                    {isOpen && (
+                      <Typewriter
+                        key={`${item.id}-${runId}`}
+                        text={item.answer}
+                        speed={28}
+                      />
+                    )}
                   </div>
                 </div>
               </div>
@@ -1014,9 +1197,7 @@ function CollectStep() {
 
           <button
             style={{ marginTop: 14 }}
-            onClick={() =>
-              alert("已收到。\n判断正在进行中，\n结果将在 24 到 48 小时内生成并发送。")
-            }
+            onClick={() => alert("已收到。\n判断正在进行中，\n结果将在 24 到 48 小时内生成并发送。")}
           >
             发送给小满
           </button>
@@ -1072,7 +1253,7 @@ function Ask() {
           {messages.map((m, i) => (
             <div key={i} style={{ marginBottom: 8 }}>
               <b>{m.role === "user" ? "你" : "AI"}：</b>
-              {m.text}
+              <div style={{ whiteSpace: "pre-wrap", lineHeight: "1.7" }}>{m.text}</div>
             </div>
           ))}
         </div>
@@ -1111,7 +1292,6 @@ export default function App() {
     const prevBodyOverflowY = body.style.overflowY;
     const prevGutter = html.style.scrollbarGutter;
 
-    // 永远预留滚动条占位，页面宽度不会因为展开内容而变化
     html.style.overflowY = "scroll";
     body.style.overflowY = "scroll";
     html.style.scrollbarGutter = "stable";
