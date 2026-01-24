@@ -114,16 +114,24 @@ function TopNav() {
 }
 
 function Layout({ children }) {
+  useEffect(() => {
+    // 强制 light mode
+    document.documentElement.style.colorScheme = "light";
+    document.body.style.backgroundColor = "#ffffff";
+  }, []);
+
   return (
     <div
       style={{
         fontFamily: "system-ui, -apple-system, Segoe UI",
-        fontSize: 16, // 全站基础字号
+        fontSize: 16,
         lineHeight: 1.6,
         color: "#111827",
+        backgroundColor: "#ffffff",
         minHeight: "100vh",
       }}
     >
+      {/* Top bar */}
       <div style={{ borderBottom: "1px solid #e5e7eb" }}>
         <div
           style={{
@@ -132,6 +140,7 @@ function Layout({ children }) {
             padding: 16,
             display: "flex",
             justifyContent: "space-between",
+            alignItems: "center",
           }}
         >
           <div style={{ fontWeight: 900 }}>{SETTINGS.brandName}</div>
@@ -139,8 +148,16 @@ function Layout({ children }) {
         </div>
       </div>
 
+      {/* Page content */}
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <div style={{ width: "100%", padding: "32px 16px", minHeight: "calc(100vh - 120px)" }}>
+        <div
+          style={{
+            width: "100%",
+            maxWidth: 960,
+            padding: "32px 16px",
+            minHeight: "calc(100vh - 120px)",
+          }}
+        >
           {children}
         </div>
       </div>
@@ -152,13 +169,15 @@ function Layout({ children }) {
 
 function FloatingConnect() {
   return (
-    <div style={{ position: "fixed", right: 16, bottom: 16 }}>
+    <div style={{ position: "fixed", right: 16, bottom: 16, zIndex: 50 }}>
       <div
         style={{
           border: "1px solid #e5e7eb",
           borderRadius: 16,
           padding: 12,
           background: "white",
+          boxShadow: "0 6px 24px rgba(0,0,0,0.08)",
+          minWidth: 160,
         }}
       >
         <div style={{ fontWeight: 900, marginBottom: 6 }}>联系真人</div>
@@ -178,7 +197,7 @@ function FloatingConnect() {
         >
           短信联系
         </a>
-        <div style={{ fontSize: 12 }}>微信：{SETTINGS.wechatId}</div>
+        <div style={{ fontSize: 12, color: "#111827" }}>微信：{SETTINGS.wechatId}</div>
       </div>
     </div>
   );
@@ -214,7 +233,7 @@ function Home() {
     margin: "0 auto",
   };
 
-  // 下面内容保持窄一点（你现在的版本）
+  // 下面内容保持窄一点
   const contentWrap = {
     width: "100%",
     maxWidth: 640,
@@ -263,7 +282,7 @@ function Home() {
           </div>
 
           <div style={smallP}>
-            Solar101 用 AI 判断「值不值得装」，不推销。
+            Solar101 AI 小满客观判断，只回答值不值得装。
             <br />
             你不需要懂太阳能，我先替你把不合适的情况筛掉。
           </div>
