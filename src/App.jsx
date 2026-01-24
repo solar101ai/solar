@@ -19,7 +19,7 @@ const APPROVED_QA = [
   {
     id: "qa_1",
     question: "装太阳能到底能不能省钱？",
-    answer: `一、太阳能是怎么变成“省钱工具”的？
+    answer: `\n 一、太阳能是怎么变成“省钱工具”的？
 最早的太阳能，是科研级和高成本技术，只有少数人用得起。
 但随着技术成熟和规模化生产，这十多年里，太阳能发电成本快速下降，
 已经从“昂贵替代能源”，变成了全球最便宜的发电方式之一。
@@ -735,16 +735,33 @@ function Estimate() {
           </div>
         )}
 
-        <button
-          onClick={() => {
-            localStorage.setItem("estimate_ctx", JSON.stringify({ bill: Number(bill) || 0, zip }));
-            nav("/deepdive");
-          }}
-          style={{ marginTop: 20 }}
-          disabled={!hasBill}
-        >
-          继续判断
-        </button>
+<button
+  onClick={() => {
+    if (!hasBill) return;
+
+    localStorage.setItem(
+      "estimate_ctx",
+      JSON.stringify({ bill: Number(bill) || 0, zip })
+    );
+    nav("/deepdive");
+  }}
+  style={{
+    marginTop: 20,
+    width: "100%",
+    padding: "12px 14px",
+    borderRadius: 14,
+    border: "1px solid #e5e7eb",
+    background: "#111827",
+    color: "white",
+    fontWeight: 900,
+    cursor: hasBill ? "pointer" : "not-allowed",
+    opacity: hasBill ? 1 : 0.35,
+    pointerEvents: hasBill ? "auto" : "none",
+  }}
+>
+  继续判断
+</button>
+
 
         {!hasBill && (
           <div style={{ fontSize: 12, color: "#9ca3af", marginTop: 8 }}>
