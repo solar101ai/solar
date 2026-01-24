@@ -1414,7 +1414,7 @@ function CollectStep() {
           )}
 
           <div style={{ fontSize: 12, color: "#9ca3af", marginTop: 10 }}>
-            点击后会自动写入 Google Sheet，不需要你再手动处理。
+            已经提交成功，小满会在24到48小时之内用你选择的方式联系你。
           </div>
         </div>
       )}
