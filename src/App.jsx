@@ -45,7 +45,7 @@ const APPROVED_QA = [
 
 三、大多数装了太阳能的人，真的省了多少钱？
 现实中，装了太阳能的家庭，节省幅度差异非常大，但有几个可参考的范围：
-很多家庭的电费支出可以降低 30%–70%
+很多家庭的电费支出可以降低 30% 到 70%
 在用电量高、屋顶条件好、系统设计合理的情况下
 有些家庭可以接近“覆盖大部分用电”
 一些家庭通过电价套利和储能配合，在高电价时段显著减少电网用电
@@ -446,11 +446,13 @@ function Home() {
   };
 
   const qRow = {
+    width: "100%",
     marginBottom: 10,
     border: "1px solid #e5e7eb",
     borderRadius: 14,
     background: "white",
     overflow: "hidden",
+    boxSizing: "border-box",
   };
 
   return (
@@ -515,9 +517,6 @@ function Home() {
 
           {APPROVED_QA.map((item) => {
             const isOpen = openId === item.id;
-
-            // 这里不再用 measured 做精确高度，因为 Typewriter 会让高度不断增长
-            // 用一个足够大的 maxHeight，配合 opacity 做超轻动画，不会截断内容
             const MAX_OPEN_HEIGHT = 2400;
 
             return (
@@ -538,44 +537,40 @@ function Home() {
                 </button>
 
                 <div
-                  style={{
-                    maxHeight: isOpen ? MAX_OPEN_HEIGHT : 0,
-                    opacity: isOpen ? 1 : 0,
-                    transition: "max-height 150ms ease, opacity 150ms ease",
-                    overflow: "hidden",
-                    background: "#f9fafb",
-                  }}
-                >
-                  <div
-                    ref={(node) => {
-                      if (node) refs.current[item.id] = node;
-                    }}
-                    style={{
-                      padding: "0 12px 12px",
-                      color: "#374151",
-                      lineHeight: 1.7,
-                      fontSize: 14,
-                    
-                      // ✅ 固定宽度，打字时不会越撑越宽
-                      width: "100%",
-                      maxWidth: 620,
-                      margin: "0 auto",
-                    
-                      // ✅ 防止长内容把布局撑爆
-                      boxSizing: "border-box",
-                      overflowWrap: "anywhere",
-                      wordBreak: "break-word",
-                    }}
-                  >
-                    {isOpen && (
-                      <Typewriter
-                        key={`${item.id}-${runId}`}
-                        text={item.answer}
-                        speed={28}
-                      />
-                    )}
-                  </div>
-                </div>
+  style={{
+    maxHeight: isOpen ? MAX_OPEN_HEIGHT : 0,
+    opacity: isOpen ? 1 : 0,
+    transition: "max-height 150ms ease, opacity 150ms ease",
+    overflow: "hidden",
+    background: "#f9fafb",
+  }}
+>
+  {/* 固定宽度壳（关键） */}
+  <div
+    style={{
+      width: 620,
+      maxWidth: "100%",
+      margin: "0 auto",
+      boxSizing: "border-box",
+      flexShrink: 0,
+    }}
+  >
+    <div
+      style={{
+        padding: "0 12px 12px",
+        color: "#374151",
+        lineHeight: 1.7,
+        fontSize: 14,
+        overflowWrap: "anywhere",
+        wordBreak: "break-word",
+      }}
+    >
+      {isOpen && (
+        <Typewriter key={`${item.id}-${runId}`} text={item.answer} speed={22} />
+      )}
+    </div>
+  </div>
+</div>
               </div>
             );
           })}
@@ -694,9 +689,7 @@ function Estimate() {
 
         {hasBill && result && (
           <div style={{ marginTop: 16 }}>
-            <div>
-              每月可能省 ${result.saveLow} 到 ${result.saveHigh}
-            </div>
+            <div>每月可能省 ${result.saveLow} 到 ${result.saveHigh}</div>
           </div>
         )}
 
@@ -988,10 +981,7 @@ function DeepDive() {
                 <button style={btn(usageTime === "night")} onClick={() => setUsageTime("night")}>
                   晚上
                 </button>
-                <button
-                  style={btn(usageTime === "unknown")}
-                  onClick={() => setUsageTime("unknown")}
-                >
+                <button style={btn(usageTime === "unknown")} onClick={() => setUsageTime("unknown")}>
                   不确定
                 </button>
               </div>
@@ -1007,13 +997,8 @@ function DeepDive() {
                 </div>
 
                 <div style={{ marginTop: 10 }}>
-                  <input
-                    type="file"
-                    onChange={(e) => setFileName(e.target.files?.[0]?.name || "")}
-                  />
-                  {fileName && (
-                    <div style={{ fontSize: 12, marginTop: 6 }}>已选择：{fileName}</div>
-                  )}
+                  <input type="file" onChange={(e) => setFileName(e.target.files?.[0]?.name || "")} />
+                  {fileName && <div style={{ fontSize: 12, marginTop: 6 }}>已选择：{fileName}</div>}
                 </div>
 
                 <div style={{ fontSize: 12, color: "#9ca3af", marginTop: 10 }}>
@@ -1139,30 +1124,18 @@ function CollectStep() {
               • 当前可用的政策和方案
             </div>
 
-            <div style={{ marginTop: 8, fontSize: 13, fontWeight: 700 }}>
-              目标只有一件事：把钱省到最多。
-            </div>
+            <div style={{ marginTop: 8, fontSize: 13, fontWeight: 700 }}>目标只有一件事：把钱省到最多。</div>
 
-            <div style={{ marginTop: 8, fontSize: 13, color: "#6b7280" }}>
-              判断完成后，会发给你。
-            </div>
+            <div style={{ marginTop: 8, fontSize: 13, color: "#6b7280" }}>判断完成后，会发给你。</div>
           </div>
 
-          <input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="你的姓名"
-            style={inputStyle}
-          />
+          <input value={name} onChange={(e) => setName(e.target.value)} placeholder="你的姓名" style={inputStyle} />
 
           <div style={{ marginTop: 10 }}>
             <button style={btn(contactMethod === "sms")} onClick={() => setContactMethod("sms")}>
               短信
             </button>
-            <button
-              style={btn(contactMethod === "wechat")}
-              onClick={() => setContactMethod("wechat")}
-            >
+            <button style={btn(contactMethod === "wechat")} onClick={() => setContactMethod("wechat")}>
               微信
             </button>
           </div>
@@ -1175,23 +1148,14 @@ function CollectStep() {
                 placeholder="手机号"
                 style={inputStyle}
               />
-              <div style={{ fontSize: 12, color: "#9ca3af", marginTop: 6 }}>
-                我会用短信把你的分析结果发给你。
-              </div>
+              <div style={{ fontSize: 12, color: "#9ca3af", marginTop: 6 }}>我会用短信把你的分析结果发给你。</div>
             </>
           )}
 
           {contactMethod === "wechat" && (
             <>
-              <input
-                value={wechat}
-                onChange={(e) => setWechat(e.target.value)}
-                placeholder="你的微信号"
-                style={inputStyle}
-              />
-              <div style={{ fontSize: 12, color: "#9ca3af", marginTop: 6 }}>
-                我会通过微信把你的分析结果发给你。
-              </div>
+              <input value={wechat} onChange={(e) => setWechat(e.target.value)} placeholder="你的微信号" style={inputStyle} />
+              <div style={{ fontSize: 12, color: "#9ca3af", marginTop: 6 }}>我会通过微信把你的分析结果发给你。</div>
             </>
           )}
 
@@ -1253,7 +1217,7 @@ function Ask() {
           {messages.map((m, i) => (
             <div key={i} style={{ marginBottom: 8 }}>
               <b>{m.role === "user" ? "你" : "AI"}：</b>
-              <div style={{ whiteSpace: "pre-wrap", lineHeight: "1.7" }}>{m.text}</div>
+              <div style={{ whiteSpace: "pre-wrap", lineHeight: 1.7 }}>{m.text}</div>
             </div>
           ))}
         </div>
