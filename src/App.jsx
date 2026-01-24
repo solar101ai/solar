@@ -1292,7 +1292,7 @@ function CollectStep() {
 
     try {
       setSubmitting(true);
-      await postToZapier(INTEGRATIONS.zapierHookUrl, payload);
+      await sendToZapier(payload);
       setSubmitted(true);
       alert("已收到。\n判断正在进行中，\n结果将在 24 到 48 小时内生成并发送。");
     } catch (err) {
