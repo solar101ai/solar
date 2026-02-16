@@ -1034,7 +1034,6 @@ function LanguageSelect() {
               e.currentTarget.style.borderColor = "#e5e7eb";
             }}
           >
-            <span style={{ fontSize: 28 }}>🇨🇳</span>
             <span>{TRANSLATIONS.zh.languageSelect.chinese}</span>
           </button>
 
@@ -1066,7 +1065,6 @@ function LanguageSelect() {
               e.currentTarget.style.borderColor = "#e5e7eb";
             }}
           >
-            <span style={{ fontSize: 28 }}>🇺🇸</span>
             <span>{TRANSLATIONS.en.languageSelect.english}</span>
           </button>
         </div>
