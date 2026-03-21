@@ -10,14 +10,13 @@ const SETTINGS = {
   market: "加利福尼亚 / California",
   wechatId: "Uscleanenergy123",
   smsNumber: "+12134589525",
+  upgradePhone: "+16262699764",
 };
 
 /* ===========
    集成配置 / Integration Config
-   只改这里就行 / Only change here
 =========== */
 const INTEGRATIONS = {
-  zapierHookUrl: "https://hooks.zapier.com/hooks/catch/11896107/uqat845/",
   uploadcarePublicKey: "a78e71a92a6aea20714f",
   source: "solar101_webapp",
 };
@@ -41,7 +40,7 @@ const TRANSLATIONS = {
     home: {
       hero: {
         title: "装太阳能之前\n先确认你是不是能真的省钱",
-        subtitle: "Solar101 AI 小满客观判断，只回答值不值得装。\n你不需要懂太阳能，我先替你把不合适的情况筛掉。",
+        subtitle: "Solar101AI 客观判断，只回答值不值得装。\n你不需要懂太阳能，我先替你把不合适的情况筛掉。",
         cta: "用 AI 判断我能不能省钱（1 分钟）",
         badge: "不适合会直说",
         badgeSubtitle: "帮你省时间",
@@ -62,15 +61,15 @@ const TRANSLATIONS = {
       title: "估算",
       billPlaceholder: "每月电费大约多少",
       zipPlaceholder: "ZIP（可选）",
-      zipHint: "帮小满判断，你大概属于哪种用电水平。",
+      zipHint: "帮 Solar101AI 判断，你大概属于哪种用电水平。",
       result: "每月可能省 ${{low}} 到 ${{high}}",
       continue: "继续判断",
       requireBill: "先输入每月电费后再继续。",
     },
     deepdive: {
       title: "继续判断",
-      receivedInfo: "小满已收到的信息",
-      receivedDetails: "小满先确认一下我目前掌握的信息：\n• 你的每月电费大约在 ${{bill}} 左右\n• 用电水平：已结合当地情况初步判断\n\n如果有不准确的地方，你可以随时修改。",
+      receivedInfo: "Solar101AI 已收到的信息",
+      receivedDetails: "Solar101AI 先确认一下目前掌握的信息：\n• 你的每月电费大约在 ${{bill}} 左右\n• 用电水平：已结合当地情况初步判断\n\n如果有不准确的地方，你可以随时修改。",
       monthlyBill: "每月电费（可修改）",
       zipCode: "ZIP（可修改，可选）",
       disclaimer: "下面这几个问题，不是为了推荐方案，而是为了避免你被不适合你的方案浪费时间。",
@@ -86,24 +85,24 @@ const TRANSLATIONS = {
       uploadTitle: "让我的判断更贴近你的真实情况（可选）",
       uploadHint: "目前我的判断，是基于常见用电模型和你刚才提供的信息。\n如果你愿意上传一张最近的电费单，我可以把判断从「大致合理」变成「更贴近你实际情况」。",
       uploadDisclaimer: "仅用于判断是否适合继续评估，不会自动触发销售联系。不上传也可以继续。",
-      computing: "小满正在计算",
+      computing: "Solar101AI 正在计算",
       computingSteps: {
-        step1: "小满正在读取你的用电画像",
+        step1: "Solar101AI 正在读取你的用电画像",
         step2: "正在结合加州电价结构和常见系统边界",
         step3: "正在检查你是否具备继续评估的基础条件",
         step4: "正在生成判断结论",
       },
       decisions: {
         level1: {
-          title: "小满判断：当前阶段适合谨慎评估",
+          title: "Solar101AI 判断：当前阶段适合谨慎评估",
           content: "从目前信息来看，你的用电规模相对较小。\n这意味着太阳能是否值得继续，需要更谨慎地判断，不建议直接推进方案。\n如果你愿意，我可以基于你更完整的数据帮你把风险和收益拆清楚。",
         },
         level2: {
-          title: "小满判断：值得继续往下做更细节的评估",
+          title: "Solar101AI 判断：值得继续往下做更细节的评估",
           content: "基于你目前提供的信息，你具备继续评估太阳能的基础条件。\n下一步我会站在\"是否真的对你划算\"的角度，把关键变量拆清楚，避免你被不适合你的方案浪费时间。",
         },
         level3: {
-          title: "小满判断：当前阶段不适合继续推进",
+          title: "Solar101AI 判断：当前阶段不适合继续推进",
           content: "基于你目前提供的信息，继续做太阳能评估，实际可落地的空间非常有限。\n这类情况下，继续往下走往往更容易消耗时间精力，而很难换来对应的收益。\n当你的用电规模、居住条件或决策环境发生变化时，再回来让我重新判断，会更理性。",
         },
         cta: "我需要一个更细节的方案",
@@ -111,11 +110,11 @@ const TRANSLATIONS = {
     },
     collect: {
       title: "下一步",
-      analyzing: "小满需要一点时间做系统分析",
+      analyzing: "Solar101AI 需要一点时间做系统分析",
       analyzingHint: "我会把你的情况整理成一个更细节的方案，然后发给你。",
       contactTitle: "我怎么把结果发给你？",
       contactHint: "你可以选择短信或微信，二选一即可。",
-      analyzing2: "小满正在继续判断",
+      analyzing2: "Solar101AI 正在继续判断",
       analyzingDetails: "• 你的用电量\n• 所在地区的电价情况\n• 地址对应的阳光和屋顶条件\n• 当前可用的政策和方案",
       goal: "目标只有一件事：把钱省到最多。",
       resultNote: "判断完成后，会发给你。",
@@ -126,10 +125,10 @@ const TRANSLATIONS = {
       phoneHint: "我会用短信把你的分析结果发给你。",
       wechatPlaceholder: "你的微信号",
       wechatHint: "我会通过微信把你的分析结果发给你。",
-      submit: "发送给小满",
+      submit: "发送给 Solar101AI",
       submitting: "发送中...",
       successAlert: "已收到。\n判断正在进行中，\n结果将在 24 到 48 小时内生成并发送。",
-      successNote: "已经提交成功，小满会在24到48小时之内用你选择的方式联系你。",
+      successNote: "已经提交成功，Solar101AI 会在24到48小时之内用你选择的方式联系你。",
       errors: {
         name: "请先填写姓名",
         phone: "请选择短信时需要填写手机号",
@@ -153,6 +152,11 @@ const TRANSLATIONS = {
       selected: "已选择：",
       uploading: "正在上传中...",
       success: "上传成功：已生成文件链接",
+    },
+    upgrade: {
+      title: "系统升级中",
+      message: "Solar101AI 正在升级，请发短信至",
+      dismiss: "关闭",
     },
   },
   en: {
@@ -282,6 +286,11 @@ const TRANSLATIONS = {
       selected: "Selected:",
       uploading: "Uploading...",
       success: "Upload successful: file link generated",
+    },
+    upgrade: {
+      title: "System Upgrading",
+      message: "Solar101AI is upgrading. Please text us at",
+      dismiss: "Close",
     },
   },
 };
@@ -772,9 +781,6 @@ function zipRand(zip, min, max) {
   return min + r * (max - min);
 }
 
-/* ===========
-   新增: 时间, Uploadcare, Zapier
-=========== */
 function nowISO() {
   return new Date().toISOString();
 }
@@ -807,18 +813,135 @@ async function uploadToUploadcare(file, publicKey) {
   };
 }
 
-async function sendToZapier(payload) {
-  const url = INTEGRATIONS.zapierHookUrl;
-  if (!url) throw new Error("Missing Zapier Hook URL");
+/* ===========
+   升级弹窗 / Upgrade Modal
+=========== */
+function UpgradeModal({ onClose }) {
+  return (
+    <div
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 1000,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: 16,
+        background: "rgba(0,0,0,0.55)",
+        backdropFilter: "blur(4px)",
+        WebkitBackdropFilter: "blur(4px)",
+      }}
+      onClick={onClose}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          background: "#ffffff",
+          borderRadius: 24,
+          padding: "36px 28px",
+          maxWidth: 400,
+          width: "100%",
+          boxShadow: "0 24px 64px rgba(0,0,0,0.22)",
+          textAlign: "center",
+          position: "relative",
+        }}
+      >
+        {/* Icon */}
+        <div
+          style={{
+            width: 56,
+            height: 56,
+            borderRadius: "50%",
+            background: "#f3f4f6",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            margin: "0 auto 20px",
+            fontSize: 26,
+          }}
+        >
+          🔧
+        </div>
 
-  await fetch(url, {
-    method: "POST",
-    mode: "no-cors",
-    headers: { "Content-Type": "text/plain;charset=UTF-8" },
-    body: JSON.stringify(payload),
-  });
+        {/* English */}
+        <div style={{ marginBottom: 16 }}>
+          <div style={{ fontWeight: 900, fontSize: 18, marginBottom: 8, color: "#111827" }}>
+            System Upgrading
+          </div>
+          <div style={{ fontSize: 15, color: "#374151", lineHeight: 1.6 }}>
+            Solar101AI is upgrading.
+            <br />
+            Please text us at{" "}
+            <a
+              href={smsHref(SETTINGS.upgradePhone)}
+              style={{ color: "#111827", fontWeight: 800, textDecoration: "underline" }}
+            >
+              {SETTINGS.upgradePhone}
+            </a>
+          </div>
+        </div>
 
-  return true;
+        {/* Divider */}
+        <div style={{ borderTop: "1px solid #e5e7eb", margin: "16px 0" }} />
+
+        {/* Chinese */}
+        <div style={{ marginBottom: 24 }}>
+          <div style={{ fontWeight: 900, fontSize: 18, marginBottom: 8, color: "#111827" }}>
+            系统升级中
+          </div>
+          <div style={{ fontSize: 15, color: "#374151", lineHeight: 1.6 }}>
+            Solar101AI 正在升级，
+            <br />
+            请发短信至{" "}
+            <a
+              href={smsHref(SETTINGS.upgradePhone)}
+              style={{ color: "#111827", fontWeight: 800, textDecoration: "underline" }}
+            >
+              {SETTINGS.upgradePhone}
+            </a>
+          </div>
+        </div>
+
+        {/* SMS Button */}
+        <a
+          href={smsHref(SETTINGS.upgradePhone)}
+          style={{
+            display: "block",
+            width: "100%",
+            padding: "14px",
+            borderRadius: 14,
+            background: "#111827",
+            color: "white",
+            fontWeight: 900,
+            fontSize: 15,
+            textDecoration: "none",
+            marginBottom: 10,
+            boxSizing: "border-box",
+          }}
+        >
+          Text {SETTINGS.upgradePhone} / 发短信
+        </a>
+
+        {/* Close */}
+        <button
+          onClick={onClose}
+          style={{
+            width: "100%",
+            padding: "12px",
+            borderRadius: 14,
+            border: "1px solid #e5e7eb",
+            background: "white",
+            color: "#6b7280",
+            fontWeight: 700,
+            fontSize: 14,
+            cursor: "pointer",
+          }}
+        >
+          Close / 关闭
+        </button>
+      </div>
+    </div>
+  );
 }
 
 /* ===========
@@ -827,7 +950,7 @@ async function sendToZapier(payload) {
 function TopNav() {
   const loc = useLocation();
   const { t } = useLanguage();
-  
+
   const linkStyle = (path) => ({
     textDecoration: "none",
     padding: "8px 14px",
@@ -854,7 +977,7 @@ function TopNav() {
 
 function Layout({ children }) {
   const { language, changeLanguage } = useLanguage();
-  
+
   useEffect(() => {
     document.documentElement.style.colorScheme = "light";
     document.body.style.backgroundColor = "#ffffff";
@@ -923,7 +1046,7 @@ function Layout({ children }) {
 
 function FloatingConnect() {
   const { t } = useLanguage();
-  
+
   return (
     <div style={{ position: "fixed", right: 16, bottom: 16, zIndex: 50 }}>
       <div
@@ -953,7 +1076,10 @@ function FloatingConnect() {
         >
           {t.contact.sms}
         </a>
-        <div style={{ fontSize: 12, color: "#111827" }}>{t.contact.wechat}{SETTINGS.wechatId}</div>
+        <div style={{ fontSize: 12, color: "#111827" }}>
+          {t.contact.wechat}
+          {SETTINGS.wechatId}
+        </div>
       </div>
     </div>
   );
@@ -1082,6 +1208,7 @@ function Home() {
 
   const [input, setInput] = useState("");
   const [openId, setOpenId] = useState(null);
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
 
   const [runId, setRunId] = useState(0);
   const [typedDoneMap, setTypedDoneMap] = useState({});
@@ -1089,12 +1216,10 @@ function Home() {
   function toggle(id) {
     setOpenId((cur) => {
       const next = cur === id ? null : id;
-
       if (next) {
         setRunId((v) => v + 1);
         setTypedDoneMap((m) => ({ ...(m || {}), [next]: false }));
       }
-
       return next;
     });
   }
@@ -1106,18 +1231,8 @@ function Home() {
     nav("/ask");
   }
 
-  const heroWrap = {
-    width: "100%",
-    maxWidth: 960,
-    margin: "0 auto",
-  };
-
-  const contentWrap = {
-    width: "100%",
-    maxWidth: 640,
-    margin: "0 auto",
-  };
-
+  const heroWrap = { width: "100%", maxWidth: 960, margin: "0 auto" };
+  const contentWrap = { width: "100%", maxWidth: 640, margin: "0 auto" };
   const hero = {
     borderRadius: 20,
     border: "1px solid rgba(255,255,255,0.12)",
@@ -1125,21 +1240,8 @@ function Home() {
     color: "white",
     padding: 20,
   };
-
-  const smallP = {
-    fontSize: 14,
-    color: "rgba(255,255,255,0.78)",
-    marginTop: 10,
-    lineHeight: 1.6,
-  };
-
-  const whiteCard = {
-    border: "1px solid #e5e7eb",
-    borderRadius: 16,
-    padding: 14,
-    background: "white",
-  };
-
+  const smallP = { fontSize: 14, color: "rgba(255,255,255,0.78)", marginTop: 10, lineHeight: 1.6 };
+  const whiteCard = { border: "1px solid #e5e7eb", borderRadius: 16, padding: 14, background: "white" };
   const qRow = {
     width: "100%",
     marginBottom: 10,
@@ -1152,22 +1254,24 @@ function Home() {
 
   return (
     <Layout>
+      {showUpgradeModal && <UpgradeModal onClose={() => setShowUpgradeModal(false)} />}
+
       <div style={heroWrap}>
         <div style={hero}>
           <div style={{ fontWeight: 900, fontSize: 22, lineHeight: 1.2 }}>
-            {t.home.hero.title.split('\n').map((line, i) => (
+            {t.home.hero.title.split("\n").map((line, i) => (
               <React.Fragment key={i}>
                 {line}
-                {i < t.home.hero.title.split('\n').length - 1 && <br />}
+                {i < t.home.hero.title.split("\n").length - 1 && <br />}
               </React.Fragment>
             ))}
           </div>
 
           <div style={smallP}>
-            {t.home.hero.subtitle.split('\n').map((line, i) => (
+            {t.home.hero.subtitle.split("\n").map((line, i) => (
               <React.Fragment key={i}>
                 {line}
-                {i < t.home.hero.subtitle.split('\n').length - 1 && <br />}
+                {i < t.home.hero.subtitle.split("\n").length - 1 && <br />}
               </React.Fragment>
             ))}
           </div>
@@ -1208,10 +1312,10 @@ function Home() {
 
       <div style={contentWrap}>
         <div style={{ marginTop: 18, color: "#374151", lineHeight: 1.7, fontSize: 15 }}>
-          {t.home.intro.split('\n').map((line, i) => (
+          {t.home.intro.split("\n").map((line, i) => (
             <React.Fragment key={i}>
               {line}
-              {i < t.home.intro.split('\n').length - 1 && <br />}
+              {i < t.home.intro.split("\n").length - 1 && <br />}
             </React.Fragment>
           ))}
         </div>
@@ -1398,12 +1502,7 @@ function Estimate() {
             value={bill}
             onChange={(e) => setBill(e.target.value)}
             placeholder={t.estimate.billPlaceholder}
-            style={{
-              padding: 10,
-              borderRadius: 12,
-              border: "1px solid #e5e7eb",
-              width: "100%",
-            }}
+            style={{ padding: 10, borderRadius: 12, border: "1px solid #e5e7eb", width: "100%" }}
           />
         </div>
 
@@ -1412,21 +1511,18 @@ function Estimate() {
             value={zip}
             onChange={(e) => setZip(e.target.value.replace(/\D/g, "").slice(0, 5))}
             placeholder={t.estimate.zipPlaceholder}
-            style={{
-              padding: 10,
-              borderRadius: 12,
-              border: "1px solid #e5e7eb",
-              width: "100%",
-            }}
+            style={{ padding: 10, borderRadius: 12, border: "1px solid #e5e7eb", width: "100%" }}
           />
-          <div style={{ fontSize: 12, color: "#6b7280", marginTop: 6 }}>
-            {t.estimate.zipHint}
-          </div>
+          <div style={{ fontSize: 12, color: "#6b7280", marginTop: 6 }}>{t.estimate.zipHint}</div>
         </div>
 
         {hasBill && result && (
           <div style={{ marginTop: 16 }}>
-            <div>{t.estimate.result.replace("{{low}}", result.saveLow).replace("{{high}}", result.saveHigh)}</div>
+            <div>
+              {t.estimate.result
+                .replace("{{low}}", result.saveLow)
+                .replace("{{high}}", result.saveHigh)}
+            </div>
           </div>
         )}
 
@@ -1454,9 +1550,7 @@ function Estimate() {
         </button>
 
         {!hasBill && (
-          <div style={{ fontSize: 12, color: "#9ca3af", marginTop: 8 }}>
-            {t.estimate.requireBill}
-          </div>
+          <div style={{ fontSize: 12, color: "#9ca3af", marginTop: 8 }}>{t.estimate.requireBill}</div>
         )}
       </div>
     </Layout>
@@ -1469,20 +1563,15 @@ function Estimate() {
 function DeepDive() {
   const { t } = useLanguage();
   const [ctx, setCtx] = useState(null);
-
   const [step, setStep] = useState("judge");
-
   const [isOwner, setIsOwner] = useState("");
   const [usageTime, setUsageTime] = useState("");
-
   const [fileName, setFileName] = useState("");
   const [fileUrl, setFileUrl] = useState("");
   const [uploading, setUploading] = useState(false);
   const [uploadErr, setUploadErr] = useState("");
-
   const [computing, setComputing] = useState(false);
   const [showResult, setShowResult] = useState(false);
-
   const [computeMsg, setComputeMsg] = useState("");
   const [computePct, setComputePct] = useState(0);
 
@@ -1496,14 +1585,10 @@ function DeepDive() {
 
   const decisionLevel = useMemo(() => {
     if (!ctx) return "none";
-
     const b = Number(ctx.bill || 0);
-
     if (b > 0 && b < 40) return "level3";
-
     if (isOwner === "no") return "level3";
     if (isOwner !== "yes") return "none";
-
     if (b < 99) return "level1";
     return "level2";
   }, [ctx, isOwner]);
@@ -1522,38 +1607,15 @@ function DeepDive() {
 
     const delay = setTimeout(() => {
       setComputing(true);
-
       setComputeMsg(t.deepdive.computingSteps.step1);
       setComputePct(18);
 
-      const t1 = setTimeout(() => {
-        setComputeMsg(t.deepdive.computingSteps.step2);
-        setComputePct(46);
-      }, 1400);
+      const t1 = setTimeout(() => { setComputeMsg(t.deepdive.computingSteps.step2); setComputePct(46); }, 1400);
+      const t2 = setTimeout(() => { setComputeMsg(t.deepdive.computingSteps.step3); setComputePct(72); }, 3000);
+      const t3 = setTimeout(() => { setComputeMsg(t.deepdive.computingSteps.step4); setComputePct(92); }, 4200);
+      const t4 = setTimeout(() => { setComputing(false); setShowResult(true); setComputeMsg(""); setComputePct(100); }, 5000);
 
-      const t2 = setTimeout(() => {
-        setComputeMsg(t.deepdive.computingSteps.step3);
-        setComputePct(72);
-      }, 3000);
-
-      const t3 = setTimeout(() => {
-        setComputeMsg(t.deepdive.computingSteps.step4);
-        setComputePct(92);
-      }, 4200);
-
-      const t4 = setTimeout(() => {
-        setComputing(false);
-        setShowResult(true);
-        setComputeMsg("");
-        setComputePct(100);
-      }, 5000);
-
-      return () => {
-        clearTimeout(t1);
-        clearTimeout(t2);
-        clearTimeout(t3);
-        clearTimeout(t4);
-      };
+      return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); };
     }, 200);
 
     return () => clearTimeout(delay);
@@ -1569,23 +1631,9 @@ function DeepDive() {
     );
   }
 
-  const card = {
-    border: "1px solid #e5e7eb",
-    borderRadius: 16,
-    padding: 14,
-    background: "white",
-    marginTop: 12,
-  };
-
+  const card = { border: "1px solid #e5e7eb", borderRadius: 16, padding: 14, background: "white", marginTop: 12 };
   const label = { fontSize: 12, color: "#6b7280", marginTop: 8 };
-  const inputStyle = {
-    width: "100%",
-    padding: 10,
-    borderRadius: 12,
-    border: "1px solid #e5e7eb",
-    marginTop: 8,
-  };
-
+  const inputStyle = { width: "100%", padding: 10, borderRadius: 12, border: "1px solid #e5e7eb", marginTop: 8 };
   const btn = (active) => ({
     padding: "10px 12px",
     borderRadius: 12,
@@ -1599,23 +1647,14 @@ function DeepDive() {
 
   const renderDecision = () => {
     if (!showResult) return null;
-
-    const decisions = {
-      level1: t.deepdive.decisions.level1,
-      level2: t.deepdive.decisions.level2,
-      level3: t.deepdive.decisions.level3,
-    };
-
+    const decisions = { level1: t.deepdive.decisions.level1, level2: t.deepdive.decisions.level2, level3: t.deepdive.decisions.level3 };
     const decision = decisions[decisionLevel];
     if (!decision) return null;
 
     return (
       <div style={{ marginTop: 24 }}>
         <div style={{ fontWeight: 900 }}>{decision.title}</div>
-        <div style={{ marginTop: 8, color: "#374151", whiteSpace: "pre-line" }}>
-          {decision.content}
-        </div>
-
+        <div style={{ marginTop: 8, color: "#374151", whiteSpace: "pre-line" }}>{decision.content}</div>
         {decisionLevel !== "level3" && (
           <button onClick={() => setStep("collect")} style={{ marginTop: 12 }}>
             {t.deepdive.decisions.cta}
@@ -1637,79 +1676,46 @@ function DeepDive() {
               <div style={{ fontSize: 12, color: "#6b7280", marginTop: 6, whiteSpace: "pre-line" }}>
                 {t.deepdive.receivedDetails.replace("{{bill}}", Number(ctx.bill || 0))}
               </div>
-
               <div style={label}>{t.deepdive.monthlyBill}</div>
               <input
                 type="number"
                 value={ctx.bill ?? ""}
-                onChange={(e) =>
-                  setCtx((c) => ({
-                    ...(c || {}),
-                    bill: Number(e.target.value) || 0,
-                  }))
-                }
+                onChange={(e) => setCtx((c) => ({ ...(c || {}), bill: Number(e.target.value) || 0 }))}
                 placeholder="e.g., 250"
                 style={inputStyle}
               />
-
               <div style={label}>{t.deepdive.zipCode}</div>
               <input
                 value={ctx.zip ?? ""}
-                onChange={(e) =>
-                  setCtx((c) => ({
-                    ...(c || {}),
-                    zip: e.target.value.replace(/\D/g, "").slice(0, 5),
-                  }))
-                }
+                onChange={(e) => setCtx((c) => ({ ...(c || {}), zip: e.target.value.replace(/\D/g, "").slice(0, 5) }))}
                 placeholder="e.g., 90027"
                 style={inputStyle}
               />
             </div>
 
-            <div style={{ fontSize: 12, color: "#6b7280", marginTop: 12 }}>
-              {t.deepdive.disclaimer}
-            </div>
+            <div style={{ fontSize: 12, color: "#6b7280", marginTop: 12 }}>{t.deepdive.disclaimer}</div>
 
             <div style={{ marginTop: 20 }}>
               <div style={{ fontWeight: 900 }}>{t.deepdive.ownerQuestion}</div>
-              <div style={{ fontSize: 12, color: "#6b7280", marginTop: 6 }}>
-                {t.deepdive.ownerHint}
-              </div>
-
-              <button style={btn(isOwner === "yes")} onClick={() => setIsOwner("yes")}>
-                {t.deepdive.yes}
-              </button>
-              <button style={btn(isOwner === "no")} onClick={() => setIsOwner("no")}>
-                {t.deepdive.no}
-              </button>
+              <div style={{ fontSize: 12, color: "#6b7280", marginTop: 6 }}>{t.deepdive.ownerHint}</div>
+              <button style={btn(isOwner === "yes")} onClick={() => setIsOwner("yes")}>{t.deepdive.yes}</button>
+              <button style={btn(isOwner === "no")} onClick={() => setIsOwner("no")}>{t.deepdive.no}</button>
             </div>
 
             {isOwner === "yes" && (
               <div style={{ marginTop: 20 }}>
                 <div style={{ fontWeight: 900 }}>{t.deepdive.usageQuestion}</div>
-                <div style={{ fontSize: 12, color: "#6b7280", marginTop: 6 }}>
-                  {t.deepdive.usageHint}
-                </div>
-
-                <button style={btn(usageTime === "day")} onClick={() => setUsageTime("day")}>
-                  {t.deepdive.day}
-                </button>
-                <button style={btn(usageTime === "night")} onClick={() => setUsageTime("night")}>
-                  {t.deepdive.night}
-                </button>
-                <button style={btn(usageTime === "unknown")} onClick={() => setUsageTime("unknown")}>
-                  {t.deepdive.unknown}
-                </button>
+                <div style={{ fontSize: 12, color: "#6b7280", marginTop: 6 }}>{t.deepdive.usageHint}</div>
+                <button style={btn(usageTime === "day")} onClick={() => setUsageTime("day")}>{t.deepdive.day}</button>
+                <button style={btn(usageTime === "night")} onClick={() => setUsageTime("night")}>{t.deepdive.night}</button>
+                <button style={btn(usageTime === "unknown")} onClick={() => setUsageTime("unknown")}>{t.deepdive.unknown}</button>
               </div>
             )}
 
             {isOwner === "yes" && (
               <div style={{ marginTop: 24, ...card }}>
                 <div style={{ fontWeight: 900 }}>{t.deepdive.uploadTitle}</div>
-                <div style={{ fontSize: 12, color: "#6b7280", marginTop: 6, whiteSpace: "pre-line" }}>
-                  {t.deepdive.uploadHint}
-                </div>
-
+                <div style={{ fontSize: 12, color: "#6b7280", marginTop: 6, whiteSpace: "pre-line" }}>{t.deepdive.uploadHint}</div>
                 <div style={{ marginTop: 10 }}>
                   <input
                     type="file"
@@ -1720,20 +1726,11 @@ function DeepDive() {
                       setFileUrl("");
                       setFileName(f?.name || "");
                       if (!f) return;
-
                       try {
                         setUploading(true);
                         const out = await uploadToUploadcare(f, INTEGRATIONS.uploadcarePublicKey);
                         setFileUrl(out.fileUrl || "");
-
-                        localStorage.setItem(
-                          "deepdive_upload",
-                          JSON.stringify({
-                            fileName: f.name,
-                            fileUrl: out.fileUrl || "",
-                            uploadedAt: nowISO(),
-                          })
-                        );
+                        localStorage.setItem("deepdive_upload", JSON.stringify({ fileName: f.name, fileUrl: out.fileUrl || "", uploadedAt: nowISO() }));
                       } catch (err) {
                         setUploadErr(err?.message || "Upload failed");
                       } finally {
@@ -1741,57 +1738,22 @@ function DeepDive() {
                       }
                     }}
                   />
-
                   {fileName && <div style={{ fontSize: 12, marginTop: 6 }}>{t.upload.selected}{fileName}</div>}
-
                   {uploading && <div style={{ fontSize: 12, marginTop: 6 }}>{t.upload.uploading}</div>}
-
-                  {!!fileUrl && (
-                    <div style={{ fontSize: 12, marginTop: 6 }}>
-                      {t.upload.success}
-                    </div>
-                  )}
-
-                  {!!uploadErr && (
-                    <div style={{ fontSize: 12, marginTop: 6, color: "#b91c1c" }}>
-                      {uploadErr}
-                    </div>
-                  )}
+                  {!!fileUrl && <div style={{ fontSize: 12, marginTop: 6 }}>{t.upload.success}</div>}
+                  {!!uploadErr && <div style={{ fontSize: 12, marginTop: 6, color: "#b91c1c" }}>{uploadErr}</div>}
                 </div>
-
-                <div style={{ fontSize: 12, color: "#9ca3af", marginTop: 10 }}>
-                  {t.deepdive.uploadDisclaimer}
-                </div>
+                <div style={{ fontSize: 12, color: "#9ca3af", marginTop: 10 }}>{t.deepdive.uploadDisclaimer}</div>
               </div>
             )}
 
             {computing && (
               <div style={{ marginTop: 24 }}>
                 <div style={{ fontWeight: 900 }}>{t.deepdive.computing}</div>
-                <div style={{ fontSize: 12, color: "#6b7280", marginTop: 6 }}>
-                  {computeMsg || "Processing your information..."}
+                <div style={{ fontSize: 12, color: "#6b7280", marginTop: 6 }}>{computeMsg || "Processing your information..."}</div>
+                <div style={{ height: 10, borderRadius: 999, background: "#e5e7eb", marginTop: 10, overflow: "hidden" }}>
+                  <div style={{ height: "100%", width: `${computePct}%`, background: "#111827", borderRadius: 999, transition: "width 400ms ease" }} />
                 </div>
-
-                <div
-                  style={{
-                    height: 10,
-                    borderRadius: 999,
-                    background: "#e5e7eb",
-                    marginTop: 10,
-                    overflow: "hidden",
-                  }}
-                >
-                  <div
-                    style={{
-                      height: "100%",
-                      width: `${computePct}%`,
-                      background: "#111827",
-                      borderRadius: 999,
-                      transition: "width 400ms ease",
-                    }}
-                  />
-                </div>
-
                 <div style={{ fontSize: 12, color: "#9ca3af", marginTop: 6 }}>{computePct}%</div>
               </div>
             )}
@@ -1808,19 +1770,17 @@ function DeepDive() {
 
 /* ===========
    下一步收集 / Collection Step
+   — Zapier removed; submit now shows UpgradeModal
 =========== */
 function CollectStep() {
   const { t } = useLanguage();
   const [phase, setPhase] = useState("analyzing");
-
   const [name, setName] = useState("");
   const [contactMethod, setContactMethod] = useState("sms");
   const [phone, setPhone] = useState("");
   const [wechat, setWechat] = useState("");
-
-  const [submitting, setSubmitting] = useState(false);
   const [submitErr, setSubmitErr] = useState("");
-  const [submitted, setSubmitted] = useState(false);
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setPhase("ask_contact"), 700);
@@ -1838,140 +1798,62 @@ function CollectStep() {
     marginTop: 8,
   });
 
-  const inputStyle = {
-    width: "100%",
-    padding: 10,
-    borderRadius: 12,
-    border: "1px solid #e5e7eb",
-    marginTop: 10,
-  };
+  const inputStyle = { width: "100%", padding: 10, borderRadius: 12, border: "1px solid #e5e7eb", marginTop: 10 };
 
-  async function handleSubmit() {
-    if (submitting) return;
+  function handleSubmit() {
     setSubmitErr("");
-    setSubmitted(false);
 
     const trimmedName = String(name || "").trim();
-    if (!trimmedName) {
-      setSubmitErr(t.collect.errors.name);
-      return;
-    }
+    if (!trimmedName) { setSubmitErr(t.collect.errors.name); return; }
+    if (contactMethod === "sms" && !String(phone).trim()) { setSubmitErr(t.collect.errors.phone); return; }
+    if (contactMethod === "wechat" && !String(wechat).trim()) { setSubmitErr(t.collect.errors.wechat); return; }
 
-    if (contactMethod === "sms" && !String(phone).trim()) {
-      setSubmitErr(t.collect.errors.phone);
-      return;
-    }
-
-    if (contactMethod === "wechat" && !String(wechat).trim()) {
-      setSubmitErr(t.collect.errors.wechat);
-      return;
-    }
-
-    let estimate = {};
-    try {
-      estimate = JSON.parse(localStorage.getItem("estimate_ctx") || "{}");
-    } catch {}
-
-    let upload = {};
-    try {
-      upload = JSON.parse(localStorage.getItem("deepdive_upload") || "{}");
-    } catch {}
-
-    const payload = {
-      time: nowISO(),
-      name: trimmedName,
-      contactMethod: contactMethod === "sms" ? "phone" : "wechat",
-      phone: contactMethod === "sms" ? String(phone).trim() : "",
-      wechat: contactMethod === "wechat" ? String(wechat).trim() : "",
-      bill: Number(estimate?.bill || 0) || 0,
-      zip: String(estimate?.zip || "").trim(),
-      fileUrl: String(upload?.fileUrl || "").trim(),
-      source: INTEGRATIONS.source,
-    };
-
-    try {
-      setSubmitting(true);
-      await sendToZapier(payload);
-      setSubmitted(true);
-      alert(t.collect.successAlert);
-    } catch (err) {
-      setSubmitErr(err?.message || "Submission failed");
-    } finally {
-      setSubmitting(false);
-    }
+    // Show upgrade modal instead of submitting to Zapier
+    setShowUpgradeModal(true);
   }
 
   return (
     <>
+      {showUpgradeModal && <UpgradeModal onClose={() => setShowUpgradeModal(false)} />}
+
       <div style={{ fontWeight: 900, fontSize: 22 }}>{t.collect.title}</div>
 
       {phase === "analyzing" && (
         <div style={{ marginTop: 12 }}>
           <div style={{ fontWeight: 900 }}>{t.collect.analyzing}</div>
-          <div style={{ fontSize: 12, color: "#6b7280", marginTop: 6 }}>
-            {t.collect.analyzingHint}
-          </div>
+          <div style={{ fontSize: 12, color: "#6b7280", marginTop: 6 }}>{t.collect.analyzingHint}</div>
         </div>
       )}
 
       {phase === "ask_contact" && (
         <div style={{ marginTop: 12 }}>
           <div style={{ fontWeight: 900 }}>{t.collect.contactTitle}</div>
-          <div style={{ fontSize: 12, color: "#6b7280", marginTop: 6 }}>
-            {t.collect.contactHint}
-          </div>
+          <div style={{ fontSize: 12, color: "#6b7280", marginTop: 6 }}>{t.collect.contactHint}</div>
 
-          <div
-            style={{
-              marginTop: 14,
-              marginBottom: 18,
-              color: "#374151",
-              lineHeight: 1.7,
-              fontSize: 14,
-            }}
-          >
+          <div style={{ marginTop: 14, marginBottom: 18, color: "#374151", lineHeight: 1.7, fontSize: 14 }}>
             <div style={{ fontWeight: 700, marginBottom: 6 }}>{t.collect.analyzing2}</div>
-
-            <div style={{ fontSize: 13, whiteSpace: "pre-line" }}>
-              {t.collect.analyzingDetails}
-            </div>
-
+            <div style={{ fontSize: 13, whiteSpace: "pre-line" }}>{t.collect.analyzingDetails}</div>
             <div style={{ marginTop: 8, fontSize: 13, fontWeight: 700 }}>{t.collect.goal}</div>
-
             <div style={{ marginTop: 8, fontSize: 13, color: "#6b7280" }}>{t.collect.resultNote}</div>
           </div>
 
           <input value={name} onChange={(e) => setName(e.target.value)} placeholder={t.collect.namePlaceholder} style={inputStyle} />
 
           <div style={{ marginTop: 10 }}>
-            <button style={btn(contactMethod === "sms")} onClick={() => setContactMethod("sms")}>
-              {t.collect.sms}
-            </button>
-            <button style={btn(contactMethod === "wechat")} onClick={() => setContactMethod("wechat")}>
-              {t.collect.wechat}
-            </button>
+            <button style={btn(contactMethod === "sms")} onClick={() => setContactMethod("sms")}>{t.collect.sms}</button>
+            <button style={btn(contactMethod === "wechat")} onClick={() => setContactMethod("wechat")}>{t.collect.wechat}</button>
           </div>
 
           {contactMethod === "sms" && (
             <>
-              <input
-                value={phone}
-                onChange={(e) => setPhone(e.target.value.replace(/\D/g, "").slice(0, 15))}
-                placeholder={t.collect.phonePlaceholder}
-                style={inputStyle}
-              />
+              <input value={phone} onChange={(e) => setPhone(e.target.value.replace(/\D/g, "").slice(0, 15))} placeholder={t.collect.phonePlaceholder} style={inputStyle} />
               <div style={{ fontSize: 12, color: "#9ca3af", marginTop: 6 }}>{t.collect.phoneHint}</div>
             </>
           )}
 
           {contactMethod === "wechat" && (
             <>
-              <input
-                value={wechat}
-                onChange={(e) => setWechat(e.target.value)}
-                placeholder={t.collect.wechatPlaceholder}
-                style={inputStyle}
-              />
+              <input value={wechat} onChange={(e) => setWechat(e.target.value)} placeholder={t.collect.wechatPlaceholder} style={inputStyle} />
               <div style={{ fontSize: 12, color: "#9ca3af", marginTop: 6 }}>{t.collect.wechatHint}</div>
             </>
           )}
@@ -1985,30 +1867,14 @@ function CollectStep() {
               background: "#111827",
               color: "white",
               fontWeight: 900,
-              cursor: submitting ? "not-allowed" : "pointer",
-              opacity: submitting ? 0.6 : 1,
+              cursor: "pointer",
             }}
-            disabled={submitting}
             onClick={handleSubmit}
           >
-            {submitting ? t.collect.submitting : t.collect.submit}
+            {t.collect.submit}
           </button>
 
-          {!!submitErr && (
-            <div style={{ fontSize: 12, color: "#b91c1c", marginTop: 8 }}>
-              {submitErr}
-            </div>
-          )}
-
-          {submitted && (
-            <div style={{ fontSize: 12, color: "#6b7280", marginTop: 8 }}>
-              {t.collect.successNote}
-            </div>
-          )}
-
-          <div style={{ fontSize: 12, color: "#9ca3af", marginTop: 10 }}>
-            {t.collect.successNote}
-          </div>
+          {!!submitErr && <div style={{ fontSize: 12, color: "#b91c1c", marginTop: 8 }}>{submitErr}</div>}
         </div>
       )}
     </>
@@ -2030,22 +1896,13 @@ function Ask() {
       setTimeout(() => {
         const q = pre.trim();
         if (!q) return;
-
         setMessages((m) => [...m, { role: "user", text: q }]);
-
         let best = { score: 0, item: null };
         for (const item of qa) {
           const s = overlapScore(q, item.question);
           if (s > best.score) best = { score: s, item };
         }
-
-        setMessages((m) => [
-          ...m,
-          {
-            role: "assistant",
-            text: best.item ? best.item.answer : t.ask.fallback,
-          },
-        ]);
+        setMessages((m) => [...m, { role: "assistant", text: best.item ? best.item.answer : t.ask.fallback }]);
       }, 0);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -2054,30 +1911,20 @@ function Ask() {
   function send(forced) {
     const q = (forced || input).trim();
     if (!q) return;
-
     setMessages((m) => [...m, { role: "user", text: q }]);
     setInput("");
-
     let best = { score: 0, item: null };
     for (const item of qa) {
       const s = overlapScore(q, item.question);
       if (s > best.score) best = { score: s, item };
     }
-
-    setMessages((m) => [
-      ...m,
-      {
-        role: "assistant",
-        text: best.item ? best.item.answer : t.ask.fallback,
-      },
-    ]);
+    setMessages((m) => [...m, { role: "assistant", text: best.item ? best.item.answer : t.ask.fallback }]);
   }
 
   return (
     <Layout>
       <div style={{ width: "100%", maxWidth: 640, margin: "0 auto", display: "grid", gap: 12 }}>
         <div style={{ fontWeight: 900 }}>{t.ask.title}</div>
-
         <div>
           {messages.map((m, i) => (
             <div key={i} style={{ marginBottom: 8 }}>
@@ -2086,19 +1933,12 @@ function Ask() {
             </div>
           ))}
         </div>
-
         <div style={{ display: "flex", gap: 8 }}>
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder={t.ask.placeholder}
-            style={{
-              flex: 1,
-              padding: 10,
-              borderRadius: 12,
-              border: "1px solid #e5e7eb",
-              minWidth: 0,
-            }}
+            style={{ flex: 1, padding: 10, borderRadius: 12, border: "1px solid #e5e7eb", minWidth: 0 }}
             onKeyDown={(e) => e.key === "Enter" && send()}
           />
           <button onClick={() => send()} style={{ padding: "10px 14px", whiteSpace: "nowrap" }}>
@@ -2115,7 +1955,7 @@ function Ask() {
 =========== */
 function ProtectedRoutes() {
   const { language } = useLanguage();
-  
+
   if (!language) {
     return <LanguageSelect />;
   }
@@ -2137,15 +1977,12 @@ export default function App() {
   useEffect(() => {
     const html = document.documentElement;
     const body = document.body;
-
     const prevHtmlOverflowY = html.style.overflowY;
     const prevBodyOverflowY = body.style.overflowY;
     const prevGutter = html.style.scrollbarGutter;
-
     html.style.overflowY = "scroll";
     body.style.overflowY = "scroll";
     html.style.scrollbarGutter = "stable";
-
     return () => {
       html.style.overflowY = prevHtmlOverflowY;
       body.style.overflowY = prevBodyOverflowY;
